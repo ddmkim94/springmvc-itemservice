@@ -37,8 +37,8 @@
         </thead>
         <tbody>
             <tr th:each="item : ${items}">
-                <td th:text="${item.id}"></td>
-                <td th:text="${item.name}"></td>
+                <td><a href="#" th:text="${item.id}"></a></td>
+                <td><a href="#" th:text="${item.name}"></a></td>
                 <td th:text="${item.price}"></td>
                 <td th:text="${item.quantity}"></td>
             </tr>
