@@ -48,7 +48,7 @@
 <div class="container">
   <h1>상품 상세</h1>
 
-  <form th:action="@{create}" method="post">
+  <form th:action="@{update-form}" method="get">
     <div class="form-input">
       <label for="id">상품 ID</label>
       <input type="text" name="id" id="id" th:value="${item.id}" readonly/>
@@ -68,7 +68,7 @@
     <hr>
     <div class="btn-div">
       <input type="submit" value="상품 수정" class="btn btn-primary"/>
-      <input type="button" value="목록으로" class="btn btn-danger" onclick="{location.href='items'}"/>
+      <input type="button" value="목록으로" class="btn btn-success" onclick="{location.href='items'}"/>
     </div>
   </form>
 
