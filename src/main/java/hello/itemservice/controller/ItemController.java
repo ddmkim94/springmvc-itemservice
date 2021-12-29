@@ -42,4 +42,27 @@ public class ItemController {
         model.addAttribute("item", saveItem);
         return "itemDetailView";
     }
+
+    // 상품 상세 폼
+
+    // 상품 수정 폼
+    @GetMapping("basic/update-form")
+    public String updateItemForm(@RequestParam("id") Long id, Model model) {
+
+        Item findItem = itemRepository.findById(id);
+        model.addAttribute("item", findItem);
+
+        return "itemUpdateForm";
+    }
+
+    // 상품 수정
+    @PostMapping("basic/update")
+    public String updateItem(@ModelAttribute Item item, Model model) {
+
+        Item updateItem = new Item(item.getName(), item.getPrice(), item.getQuantity());
+        itemRepository.updateOne(item.getId(), updateItem);
+
+        model.addAttribute("item", updateItem);
+        return "redirect:itemDetailView";
+    }
 }
