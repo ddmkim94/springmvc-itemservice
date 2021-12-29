@@ -8,7 +8,7 @@ import java.util.*;
 @Repository
 public class ItemRepository {
 
-    private static Map<Long, Item> store = new HashMap<>();
+    private static final Map<Long, Item> store = new HashMap<>();
     private static long sequence = 0L;
 
 
