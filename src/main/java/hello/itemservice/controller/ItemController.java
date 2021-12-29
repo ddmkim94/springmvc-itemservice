@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,15 +36,10 @@ public class ItemController {
 
     // 상품 등록 로직
     @PostMapping("basic/create")
-    public String createItem(@RequestParam("name") String name,
-                             @RequestParam("price") int price,
-                             @RequestParam("quantity") int quantity,
-                             Model model) {
-        log.info("name={}, price={}, quantity={}", name, price, quantity);
+    public String createItem(@ModelAttribute Item item, Model model) {
 
-        Item item = new Item(name, price, quantity);
         Item saveItem = itemRepository.save(item);
-        model.addAttribute("saveItem", saveItem);
+        model.addAttribute("item", saveItem);
         return "itemDetailView";
     }
 }
