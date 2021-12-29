@@ -41,4 +41,9 @@ public class ItemRepository {
 
         return items;
     }
+
+    // 상품 제거
+    public void clearStore() {
+        store.clear();
+    }
 }
