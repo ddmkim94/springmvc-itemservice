@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<style>
+    .container {
+        margin: 0 auto;
+        width: 50%;
+        text-align: center;
+    }
+    th {
+        text-align: center;
+    }
+    .btn-div {
+        text-align: right;
+    }
+</style>
+<body>
+<div class="container">
+    <h1>상품 목록</h1>
+    <div class="btn-div">
+        <a href="item-form" class="btn btn-primary">상품 등록</a>
+    </div>
+    <hr>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>수량</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${items}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.quantity}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
