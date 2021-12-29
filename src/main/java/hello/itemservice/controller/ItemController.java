@@ -44,25 +44,30 @@ public class ItemController {
     }
 
     // 상품 상세 폼
-
-    // 상품 수정 폼
-    @GetMapping("basic/update-form")
-    public String updateItemForm(@RequestParam("id") Long id, Model model) {
+    @GetMapping("basic/detail-form")
+    public String detailItemForm(@RequestParam("id") Long id, Model model) {
 
         Item findItem = itemRepository.findById(id);
         model.addAttribute("item", findItem);
 
+        return "itemDetailView";
+    }
+
+    // 상품 수정 폼
+    @GetMapping("basic/update-form")
+    public String updateItemForm(@ModelAttribute Item item, Model model) {
+
+        model.addAttribute("item", item);
         return "itemUpdateForm";
     }
 
     // 상품 수정
     @PostMapping("basic/update")
-    public String updateItem(@ModelAttribute Item item, Model model) {
+    public String updateItem(@ModelAttribute Item item) {
 
         Item updateItem = new Item(item.getName(), item.getPrice(), item.getQuantity());
         itemRepository.updateOne(item.getId(), updateItem);
 
-        model.addAttribute("item", updateItem);
-        return "redirect:itemDetailView";
+        return "redirect:detail-form?id=" + item.getId();
     }
 }
