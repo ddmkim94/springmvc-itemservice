@@ -13,23 +13,23 @@ public class ItemRepository {
 
 
     // 상품 등록
-    public void save(Item item) {
-        store.put(++sequence, item);
+    public Item save(Item item) {
+        item.setId(++sequence);
+        store.put(item.getId(), item);
+        return item;
     }
 
     // 상품 상세 정보
-    public Item findOne(Long id) {
+    public Item findById(Long id) {
         return store.get(id);
     }
 
     // 상품 수정
-    public Item updateOne(Item item) {
-        Item findItem = store.get(item.getId());
-        findItem.setName(item.getName());
-        findItem.setPrice(item.getPrice());
-        findItem.setQuantity(item.getQuantity());
-
-        return findItem;
+    public void updateOne(Long id, Item updateParam) {
+        Item findItem = store.get(id);
+        findItem.setName(updateParam.getName());
+        findItem.setPrice(updateParam.getPrice());
+        findItem.setQuantity(updateParam.getQuantity());
     }
 
     // 상품 목록
