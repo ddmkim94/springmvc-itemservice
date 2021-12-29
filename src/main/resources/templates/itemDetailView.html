@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 등록 폼</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<style>
+  .container {
+    margin: 0 auto;
+    width: 50%;
+  }
+
+  h1{
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .form-input {
+    display: flex;
+    flex-direction: column;
+  }
+
+  form input {
+    background-color: lightgray;
+    outline: none;
+  }
+
+  input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid black;
+  }
+
+  .btn-div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn-div input {
+    margin: 0 10px;
+    width: 50%;
+    height: 50px;
+  }
+
+</style>
+<body>
+<div class="container">
+  <h1>상품 상세</h1>
+
+  <form th:action="@{update-form}" method="get">
+    <div class="form-input">
+      <label for="id">상품 ID</label>
+      <input type="text" name="id" id="id" th:value="${item.id}" readonly/>
+    </div>
+    <div class="form-input">
+      <label for="name">상품명</label>
+      <input type="text" name="name" id="name" th:value="${item.name}" readonly/>
+    </div>
+    <div class="form-input">
+      <label for="price">가격</label>
+      <input type="text" name="price" id="price" th:value="${item.price}" readonly/>
+    </div>
+    <div class="form-input">
+      <label for="quantity">수량</label>
+      <input type="text" name="quantity" id="quantity" th:value="${item.quantity}" readonly/>
+    </div>
+    <hr>
+    <div class="btn-div">
+      <input type="submit" value="상품 수정" class="btn btn-primary"/>
+      <input type="button" value="목록으로" class="btn btn-success" onclick="{location.href='items'}"/>
+    </div>
+  </form>
+
+</div>
+</body>
+</html>
