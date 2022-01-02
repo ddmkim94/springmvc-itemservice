@@ -26,7 +26,7 @@ public class ItemRepository {
 
     // 상품 수정
     public void updateOne(Long id, Item updateParam) {
-        Item findItem = store.get(id);
+        Item findItem = findById(id);
         findItem.setName(updateParam.getName());
         findItem.setPrice(updateParam.getPrice());
         findItem.setQuantity(updateParam.getQuantity());
