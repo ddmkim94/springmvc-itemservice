@@ -35,9 +35,9 @@ public class ItemController {
         return "basic/item";
     }
 
-    @GetMapping("basic/item-form")
-    public String createItemForm() {
-        return "createItemForm";
+    @GetMapping("/add")
+    public String addForm() {
+        return "basic/addForm";
     }
 
     // 상품 등록 로직
