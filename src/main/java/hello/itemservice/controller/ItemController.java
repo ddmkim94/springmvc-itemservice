@@ -27,6 +27,14 @@ public class ItemController {
         return "basic/items";
     }
 
+    // 상품 상세 폼
+    @GetMapping("/{itemId}")
+    public String item(@PathVariable("itemId") Long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "basic/item";
+    }
+
     @GetMapping("basic/item-form")
     public String createItemForm() {
         return "createItemForm";
@@ -41,15 +49,6 @@ public class ItemController {
         return "itemDetailView";
     }
 
-    // 상품 상세 폼
-    @GetMapping("basic/detail-form")
-    public String detailItemForm(@RequestParam("id") Long id, Model model) {
-
-        Item findItem = itemRepository.findById(id);
-        model.addAttribute("item", findItem);
-
-        return "itemDetailView";
-    }
 
     // 상품 수정 폼
     @GetMapping("basic/update-form")
