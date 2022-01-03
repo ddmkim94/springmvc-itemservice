@@ -16,20 +16,20 @@
     margin-bottom: 50px;
   }
 
+  h2{
+    margin-bottom: 20px;
+  }
+
   .form-input {
     display: flex;
     flex-direction: column;
-  }
-
-  form input {
-    background-color: lightgray;
-    outline: none;
   }
 
   input {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid black;
+    outline: none;
   }
 
   .btn-div {
@@ -46,29 +46,26 @@
 </style>
 <body>
 <div class="container">
-  <h1>상품 상세</h1>
+  <h1>상품 등록 폼</h1>
 
-  <form th:action="@{update-form}" method="get">
-    <div class="form-input">
-      <label for="id">상품 ID</label>
-      <input type="text" name="id" id="id" th:value="${item.id}" readonly/>
-    </div>
+  <h2>상품 입력</h2>
+  <form th:action="@{/basic/items/add}" method="post">
     <div class="form-input">
       <label for="name">상품명</label>
-      <input type="text" name="name" id="name" th:value="${item.name}" readonly/>
+      <input type="text" name="name" id="name"/>
     </div>
     <div class="form-input">
       <label for="price">가격</label>
-      <input type="text" name="price" id="price" th:value="${item.price}" readonly/>
+      <input type="text" name="price" id="price"/>
     </div>
     <div class="form-input">
       <label for="quantity">수량</label>
-      <input type="text" name="quantity" id="quantity" th:value="${item.quantity}" readonly/>
+      <input type="text" name="quantity" id="quantity"/>
     </div>
     <hr>
     <div class="btn-div">
-      <input type="submit" value="상품 수정" class="btn btn-primary"/>
-      <input type="button" value="목록으로" class="btn btn-success" onclick="{location.href='items'}"/>
+      <input type="submit" value="상품 등록" class="btn btn-primary"/>
+      <input type="button" value="취소" class="btn btn-danger" th:onclick="|localtion.href=@{/basic/items}|"/>
     </div>
   </form>
 
