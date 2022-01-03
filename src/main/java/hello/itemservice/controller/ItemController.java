@@ -6,27 +6,25 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Slf4j
 @Controller
+@RequestMapping("/basic/items")
 @RequiredArgsConstructor
 public class ItemController {
 
     private final ItemRepository itemRepository;
 
     // 상품 목록
-    @GetMapping("basic/items")
-    public String itemList(Model model) {
-
+    @GetMapping
+    public String items(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
-        return "items";
+        return "basic/items";
     }
 
     @GetMapping("basic/item-form")
@@ -69,5 +67,16 @@ public class ItemController {
         itemRepository.updateOne(item.getId(), updateItem);
 
         return "redirect:detail-form?id=" + item.getId();
+    }
+
+    /**
+     * 테스트용 데이터 추가
+     */
+    @PostConstruct
+    public void init() {
+        itemRepository.save(new Item(1L, "iPad Pro", 1000000, 10));
+        itemRepository.save(new Item(2L, "MacBook Pro", 2000000, 20));
+        itemRepository.save(new Item(3L, "Apple Watch", 500000, 30));
+        itemRepository.save(new Item(4L, "AirPods Pro", 300000, 40));
     }
 }

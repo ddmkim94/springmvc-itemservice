@@ -22,7 +22,7 @@
 <div class="container">
     <h1>상품 목록</h1>
     <div class="btn-div">
-        <a href="item-form" class="btn btn-primary">상품 등록</a>
+        <a th:href="@{/basic/items/add}" class="btn btn-primary">상품 등록</a>
     </div>
     <hr>
 
@@ -37,10 +37,10 @@
         </thead>
         <tbody>
             <tr th:each="item : ${items}">
-                <td><a th:href="@{detail-form(id=${item.id})}" th:text="${item.id}"></a></td>
-                <td><a th:href="@{detail-form(id=${item.id})}" th:text="${item.name}"></a></td>
-                <td th:text="${item.price}"></td>
-                <td th:text="${item.quantity}"></td>
+                <td><a th:href="@{/basic/items/{itemId}(itemId=${item.id})}" th:text="${item.id}">회원 id</a></td>
+                <td><a th:href="@{|/basic/items/${item.id}|}" th:text="${item.name}">상품명</a></td>
+                <td th:text="${item.price}">상품가격</td>
+                <td th:text="${item.quantity}">상품수량</td>
             </tr>
         </tbody>
     </table>
