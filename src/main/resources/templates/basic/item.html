@@ -48,6 +48,8 @@
 <div class="container">
     <h1>상품 상세</h1>
 
+    <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+
     <div class="form-input">
         <label for="id">상품 ID</label>
         <input type="text" name="id" id="id" th:value="${item.id}" readonly/>
