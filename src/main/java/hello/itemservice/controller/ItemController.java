@@ -77,22 +77,19 @@ public class ItemController {
         return "basic/item";
     }
 
-
     // 상품 수정 폼
-    @GetMapping("basic/update-form")
-    public String updateItemForm(@ModelAttribute Item item, Model model) {
-
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable("itemId") Long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
-        return "itemUpdateForm";
+        return "basic/editForm";
     }
 
     // 상품 수정
-    @PostMapping("basic/update")
-    public String updateItem(@ModelAttribute Item item) {
-        Item updateItem = new Item(item.getName(), item.getPrice(), item.getQuantity());
-        itemRepository.updateOne(item.getId(), updateItem);
-
-        return "redirect:detail-form?id=" + item.getId();
+    @PostMapping("/{itemId}/edit")
+    public String edit(@PathVariable("itemId") Long itemId , @ModelAttribute Item item) {
+        itemRepository.updateOne(itemId, item);
+        return "redirect:/basic/items/{itemId}";
     }
 
     /**

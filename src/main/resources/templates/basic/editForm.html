@@ -37,7 +37,7 @@
         justify-content: space-between;
     }
 
-    .btn-div input {
+    .btn-div button {
         margin: 0 10px;
         width: 50%;
         height: 50px;
@@ -48,7 +48,7 @@
 <div class="container">
     <h1>상품 수정 폼</h1>
 
-    <form th:action="@{update}" method="post">
+    <form th:action="@{|/basic/items/${item.id}/edit|}" method="post">
         <div class="form-input">
             <label for="id">상품 ID</label>
             <input type="text" name="id" id="id" th:value="${item.id}" readonly/>
@@ -67,8 +67,9 @@
         </div>
         <hr>
         <div class="btn-div">
-            <input type="submit" value="상품 수정" class="btn btn-primary"/>
-            <input type="button" value="목록으로" class="btn btn-success" onclick="{location.href='items'}"/>
+            <button type="submit" class="btn btn-primary">저장</button>
+            <button type="button" class="btn btn-secondary"
+                   th:onclick="|location.href='@{/basic/items/{itemId}(itemId=${item.id})}'|">취소</button>
         </div>
     </form>
 </div>
