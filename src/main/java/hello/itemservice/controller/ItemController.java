@@ -40,13 +40,41 @@ public class ItemController {
         return "basic/addForm";
     }
 
-    // 상품 등록 로직
-    @PostMapping("basic/create")
-    public String createItem(@ModelAttribute Item item, Model model) {
+    /**
+     * 상품 등록 처리 V1 (@RequestParam)
+     * 요청 데이터의 이름과 파라미터의 이름을 똑같이 설정하는 경우 @RequestParam 속성 생략 가능
+      */
+    // @PostMapping("/add")
+    public String addItemV1(@RequestParam("name") String name,
+                            @RequestParam int price,
+                            @RequestParam int quantity,
+                            Model model) {
 
+        Item item = new Item(name, price, quantity);
+        itemRepository.save(item);
+        model.addAttribute("item", item);
+        return "basic/item";
+    }
+
+    // 상품 등록 처리 V2 (@ModelAttribute)
+    // @PostMapping("/add")
+    public String addItemV2(@ModelAttribute("item") Item item, Model model) {
         Item saveItem = itemRepository.save(item);
         model.addAttribute("item", saveItem);
-        return "itemDetailView";
+        return "basic/item";
+    }
+
+    @PostMapping("/add")
+    public String addItemV3(@ModelAttribute Item item) {
+        itemRepository.save(item);
+        // @ModelAttribute가 model에 지정한 객체를 자동으로 넣어줌
+        return "basic/item";
+    }
+
+    // @PostMapping("/add")
+    public String addItemV4(Item item) {
+        itemRepository.save(item);
+        return "basic/item";
     }
 
 
@@ -61,7 +89,6 @@ public class ItemController {
     // 상품 수정
     @PostMapping("basic/update")
     public String updateItem(@ModelAttribute Item item) {
-
         Item updateItem = new Item(item.getName(), item.getPrice(), item.getQuantity());
         itemRepository.updateOne(item.getId(), updateItem);
 
