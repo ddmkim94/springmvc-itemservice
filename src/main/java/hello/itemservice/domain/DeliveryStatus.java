@@ -1,5 +1,5 @@
 package hello.itemservice.domain;
 
 public enum DeliveryStatus {
-    FINISH
+    READY, COMP // READY(준비), COMP(배송)
 }
