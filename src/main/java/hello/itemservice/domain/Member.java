@@ -1,6 +1,7 @@
 package hello.itemservice.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import static javax.persistence.GenerationType.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Member {
 
     @Id @GeneratedValue(strategy = IDENTITY)
@@ -23,4 +25,9 @@ public class Member {
 
     @Embedded // 값 타입을 사용
     private Address address;
+
+    public Member(String name, Address address) {
+        this.name = name;
+        this.address = address;
+    }
 }
