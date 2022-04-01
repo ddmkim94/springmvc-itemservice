@@ -1,0 +1,17 @@
+spring:
+    datasource: # 데이터베이스 설정
+      url: jdbc:h2:mem:test
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+
+    jpa:
+      hibernate:
+        ddl-auto: create # 실행 시점에 모든 테이블 drop 하고, 다시 생성
+      properties:
+        hibernate:
+          format_sql: true # 보여지는 쿼리를 포맷팅해서 보여줌
+
+logging:
+  level:
+    org.hibernate.SQL: debug # hibernate SQL 쿼리를 로그에 표시
