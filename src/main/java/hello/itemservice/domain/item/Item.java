@@ -1,6 +1,7 @@
 package hello.itemservice.domain.item;
 
 import hello.itemservice.domain.ChildCategory;
+import hello.itemservice.exception.NotEnoughStockException;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -26,4 +27,23 @@ public abstract class Item {
     private String name;
     private int price;
     private int stockQuantity;
+
+    // ==비즈니스 로직==//
+    /**
+     * 재고 증가 -> 재고 증가 or 주문 취소
+     */
+    public void addStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
+
+    /**
+     * 재고 감소 -> 주문
+     */
+    public void removeStock(int quantity) {
+        int restStock = this.stockQuantity - quantity; // 남은 재고 수량
+        if (restStock < 0) {
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.stockQuantity = restStock;
+    }
 }
