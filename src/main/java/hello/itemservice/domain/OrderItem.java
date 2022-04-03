@@ -48,6 +48,16 @@ public class OrderItem {
         this.order = order;
     }
 
+    /**
+     * Getter 사용 이유? <br>
+     * 필드를 사용해도 상관없지만, JPA 프록시를 다루는 경우에는 달라짐 <br>
+     * 만약 조회한 엔티티가 프록시 객체라면 필드에 직접 접근을 하게되면 원본 객체를 가져오지 못함 <br>
+     * 이 문제는 equals(), hashCode()를 JPA 프록시 객체로 구현할 때 문제가 될 수 있다. <br>
+     * 프록시 객체의 equals()를 호출했는데 필드에 직접 접근하면 프록시 객체는 값이 없는 상태기 떄문에 <br>
+     * 항상 null이 반환되기 때문에, equals, hashCode를 구현하는 경우에는
+     * 반드시 내부에서 getter를 사용해서 구현!!
+     *
+     */
     public int getTotalPrice() {
         return this.getOrderPrice() * this.getCount();
     }

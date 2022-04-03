@@ -1,6 +1,7 @@
 package hello.itemservice.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import static javax.persistence.GenerationType.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Delivery {
 
     @Id @GeneratedValue(strategy = IDENTITY)
@@ -24,6 +26,11 @@ public class Delivery {
 
     @Enumerated(STRING)
     private DeliveryStatus deliveryStatus;
+
+    public Delivery(Address address, DeliveryStatus deliveryStatus) {
+        this.address = address;
+        this.deliveryStatus = deliveryStatus;
+    }
 
     public void addOrder(Order order) {
         this.order = order;
