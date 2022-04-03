@@ -24,4 +24,8 @@ public class Delivery {
 
     @Enumerated(STRING)
     private DeliveryStatus deliveryStatus;
+
+    public void addOrder(Order order) {
+        this.order = order;
+    }
 }
