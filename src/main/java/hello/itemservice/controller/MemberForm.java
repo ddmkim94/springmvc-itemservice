@@ -2,10 +2,11 @@ package hello.itemservice.controller;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 public class MemberForm {
 
@@ -15,11 +16,4 @@ public class MemberForm {
     private String city;
     private String street;
     private String zipcode;
-
-    public MemberForm(String name, String city, String street, String zipcode) {
-        this.name = name;
-        this.city = city;
-        this.street = street;
-        this.zipcode = zipcode;
-    }
 }
