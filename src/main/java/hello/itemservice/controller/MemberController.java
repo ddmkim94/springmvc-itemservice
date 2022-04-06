@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,19 +27,21 @@ public class MemberController {
 
     @PostMapping("/members/new")
     public String create(@Valid MemberForm form, BindingResult result) {
-        System.out.println(form.getName());
-        System.out.println(form.getCity());
-        System.out.println(form.getStreet());
-        System.out.println(form.getZipcode());
-
         if (result.hasErrors()) {
             return "members/createMemberForm";
         }
 
         Member member = new Member(form.getName(), new Address(form.getCity(), form.getStreet(), form.getZipcode()));
-
         memberService.join(member);
 
         return "redirect:/";
+    }
+
+    @GetMapping("members")
+    public String list(Model model) {
+        // 리팩토링 할 부분! => Member 엔티티를 반환하지말고, 필요한 데이터만 가진 DTO를 만들어서 리턴하자!
+        List<Member> members = memberService.findAll();
+        model.addAttribute("members", members);
+        return "members/memberList";
     }
 }
