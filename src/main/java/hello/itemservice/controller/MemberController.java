@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,7 +41,11 @@ public class MemberController {
     @GetMapping("members")
     public String list(Model model) {
         // 리팩토링 할 부분! => Member 엔티티를 반환하지말고, 필요한 데이터만 가진 DTO를 만들어서 리턴하자!
-        List<Member> members = memberService.findAll();
+        List<Member> findMembers = memberService.findAll();
+        List<MemberSearchDTO> members = new ArrayList<>();
+        for (Member member : findMembers) {
+            members.add(new MemberSearchDTO(member.getId(), member.getName(), member.getAddress()));
+        }
         model.addAttribute("members", members);
         return "members/memberList";
     }

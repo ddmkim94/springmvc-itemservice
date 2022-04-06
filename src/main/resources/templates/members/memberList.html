@@ -21,9 +21,9 @@
             <td th:text="${member.id}"></td>
             <td th:text="${member.name}"></td>
             <!-- 타임리프에서 ?는 null을 무시함 -->
-            <td th:text="${member.address.city} + ' '
-                      + ${member.address.street} + ' '
-                      + ${member.address.zipcode}"></td>
+            <td th:text="${member.address?.city} + ' '
+                      + ${member.address?.street} + ' '
+                      + ${member.address?.zipcode}"></td>
           </tr>
         </tbody>
       </table>
