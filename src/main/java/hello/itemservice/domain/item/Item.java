@@ -29,6 +29,13 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
+    public Item(Long id, String name, int price, int stockQuantity) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+    }
+
     public Item(String name, int price, int stockQuantity) {
         this.name = name;
         this.price = price;
