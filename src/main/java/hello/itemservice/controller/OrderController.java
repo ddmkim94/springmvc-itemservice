@@ -1,6 +1,8 @@
 package hello.itemservice.controller;
 
 import hello.itemservice.domain.Member;
+import hello.itemservice.domain.Order;
+import hello.itemservice.domain.OrderSearch;
 import hello.itemservice.domain.item.Item;
 import hello.itemservice.service.ItemService;
 import hello.itemservice.service.MemberService;
@@ -8,10 +10,7 @@ import hello.itemservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,5 +40,20 @@ public class OrderController {
 
         orderService.order(memberId, itemId, count);
         return "redirect:/orders"; // 주문 후 주문 목록으로 넘어감
+    }
+
+    @GetMapping("/orders")
+    public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
+
+        List<Order> orders = orderService.findOrders(orderSearch);
+        model.addAttribute("orders", orders);
+
+        return "order/orderList";
+    }
+
+    @PostMapping("/orders/{orderId}/cancel")
+    public String cancelOrder(@PathVariable("orderId") Long orderId) {
+        orderService.cancelOrder(orderId);
+        return "redirect:/orders";
     }
 }
