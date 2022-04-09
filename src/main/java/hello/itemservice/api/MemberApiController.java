@@ -5,9 +5,7 @@ import hello.itemservice.domain.Member;
 import hello.itemservice.service.MemberService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -40,6 +38,34 @@ public class MemberApiController {
         Long memberId = memberService.join(member);
 
         return new CreateMemberResponse(memberId);
+    }
+
+    /**
+     * 수정 API
+     */
+    @PutMapping("/api/v2/members/{id}")
+    public UpdateMemberResponse updateMemberV2(@PathVariable("id") Long memberId, @RequestBody @Valid UpdateMemberRequest request) {
+        memberService.update(memberId, request.getName());
+        Member findMember = memberService.findById(memberId);
+        return new UpdateMemberResponse(findMember.getId(), findMember.getName());
+    }
+
+    // 변경할 데이터로 name을 받아서 바인딩
+    @Data
+    static class UpdateMemberRequest {
+        private String name;
+    }
+
+    // 반환할 DTO
+    @Data
+    static class UpdateMemberResponse {
+        private Long id;
+        private String name;
+
+        public UpdateMemberResponse(Long id, String name) {
+            this.id = id;
+            this.name = name;
+        }
     }
 
     // DTO 역할을 하는 클래스

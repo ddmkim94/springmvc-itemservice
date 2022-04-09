@@ -34,6 +34,16 @@ public class MemberService {
     }
 
     /**
+     * 회원 정보 수정
+     * - 변경 감지를 통한 데이터 변경
+     */
+    @Transactional
+    public void update(Long memberId, String updateName) {
+        Member findMember = memberRepository.findById(memberId);
+        findMember.changeMember(updateName);
+    }
+
+    /**
      * 전체 회원 조회
      */
     public List<Member> findAll() {
