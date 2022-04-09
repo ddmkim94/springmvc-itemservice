@@ -3,12 +3,15 @@ package hello.itemservice.api;
 import hello.itemservice.domain.Address;
 import hello.itemservice.domain.Member;
 import hello.itemservice.service.MemberService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 // @Controller + @ResponseBody
 @RestController
@@ -49,6 +52,42 @@ public class MemberApiController {
         Member findMember = memberService.findById(memberId);
         return new UpdateMemberResponse(findMember.getId(), findMember.getName());
     }
+
+    @GetMapping("/api/v2/members")
+    public Result<List<MemberDTO>> membersV2() {
+        List<Member> members = memberService.findAll();
+        List<MemberDTO> collect = new ArrayList<>();
+        for (Member member : members) {
+            MemberDTO memberDTO = new MemberDTO(member.getName(), member.getAddress());
+            collect.add(memberDTO);
+        }
+
+        return new Result<>(collect.size(), collect);
+    }
+
+    /**
+     * 회원 조회 V1: 모든 엔티티의 필드가 노출!!
+     */
+    @GetMapping("/api/v1/members")
+    public List<Member> membersV1() {
+        return memberService.findAll();
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+        private int count;
+        private T data;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class MemberDTO {
+        private String name;
+        private Address address;
+    }
+
+
 
     // 변경할 데이터로 name을 받아서 바인딩
     @Data
