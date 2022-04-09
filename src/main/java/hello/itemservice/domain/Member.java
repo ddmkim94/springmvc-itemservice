@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,10 @@ public class Member {
 
     @Embedded // 값 타입을 사용
     private Address address;
+
+    public Member(String name) {
+        this.name = name;
+    }
 
     public Member(String name, Address address) {
         this.name = name;
