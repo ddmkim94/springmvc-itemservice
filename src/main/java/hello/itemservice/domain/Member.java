@@ -22,6 +22,7 @@ public class Member {
 
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
