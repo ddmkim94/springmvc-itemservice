@@ -5,6 +5,8 @@ import hello.itemservice.domain.Order;
 import hello.itemservice.domain.OrderSearch;
 import hello.itemservice.domain.OrderStatus;
 import hello.itemservice.repository.OrderRepository;
+import hello.itemservice.repository.order.simplequery.OrderSimpleQueryDTO;
+import hello.itemservice.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,15 @@ import java.util.List;
 public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderSimpleQueryRepository orderSimpleQueryRepository;
+
+    @GetMapping("/api/v4/simple-orders")
+    public Yeonseo<List<OrderSimpleQueryDTO>> ordersV4() {
+        return new Yeonseo<>(orderSimpleQueryRepository.findOrderDtos());
+    }
 
     /**
-     * fetch join 최적화! -> 쿼리 1개 실행!
+     * 주문 조회 V3 - fetch join 최적화!
      */
     @GetMapping("/api/v3/simple-orders")
     public Yeonseo<List<SimpleOrderDTO>> ordersV3() {
@@ -37,6 +45,9 @@ public class OrderSimpleApiController {
         return new Yeonseo<>(result);
     }
 
+    /**
+     * 주문 조회 V2 - 엔티티를 DTO로 변환해서 반환
+     */
     @GetMapping("/api/v2/simple-orders")
     public Yeonseo<List<SimpleOrderDTO>> ordersV2() {
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
