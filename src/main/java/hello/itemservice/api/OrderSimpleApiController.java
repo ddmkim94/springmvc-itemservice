@@ -21,6 +21,22 @@ public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
 
+    /**
+     * fetch join 최적화! -> 쿼리 1개 실행!
+     */
+    @GetMapping("/api/v3/simple-orders")
+    public Yeonseo<List<SimpleOrderDTO>> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+        List<SimpleOrderDTO> result = new ArrayList<>();
+
+        for (Order order : orders) {
+            SimpleOrderDTO dto = new SimpleOrderDTO(order);
+            result.add(dto);
+        }
+
+        return new Yeonseo<>(result);
+    }
+
     @GetMapping("/api/v2/simple-orders")
     public Yeonseo<List<SimpleOrderDTO>> ordersV2() {
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
@@ -29,7 +45,7 @@ public class OrderSimpleApiController {
         for (Order order : orders) {
             result.add(new SimpleOrderDTO(order));
         }
-        return new Yeonseo<>(result.size(), result);
+        return new Yeonseo<>(result);
     }
 
     @GetMapping("/api/v1/simple-orders")
@@ -45,7 +61,6 @@ public class OrderSimpleApiController {
     @Data
     @AllArgsConstructor
     static class Yeonseo<T> {
-        private int count;
         private T data;
     }
 
