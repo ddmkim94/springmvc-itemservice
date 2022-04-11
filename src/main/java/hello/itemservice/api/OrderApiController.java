@@ -22,7 +22,21 @@ public class OrderApiController {
     private final OrderRepository orderRepository;
 
     /**
-     * V2 - 엔티티를 DTO로 변환해서 반환!
+     * V3 - 엔티티 -> DTO 변환 (fetch join 사용!)
+     */
+    @GetMapping("/api/v3/orders")
+    public List<OrderDTO> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithItem();
+        List<OrderDTO> result = new ArrayList<>();
+
+        for (Order order : orders) {
+            result.add(new OrderDTO(order));
+        }
+        return result;
+    }
+
+    /**
+     * V2 - 엔티티 -> DTO 변환 (fetch join 사용 X)
      */
     @GetMapping("/api/v2/orders")
     public Result<List<OrderDTO>> ordersV2() {
