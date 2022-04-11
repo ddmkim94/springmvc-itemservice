@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,19 @@ import java.util.List;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+
+    @GetMapping("/api/v3.1/orders")
+    public List<OrderDTO> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                        @RequestParam(value = "limit", defaultValue = "100") int limit) {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
+        List<OrderDTO> result = new ArrayList<>();
+
+        for (Order order : orders) {
+            result.add(new OrderDTO(order));
+        }
+        return result;
+    }
+
 
     /**
      * V3 - 엔티티 -> DTO 변환 (fetch join 사용!)
