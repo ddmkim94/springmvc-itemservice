@@ -2,6 +2,7 @@ package hello.itemservice.api;
 
 import hello.itemservice.domain.*;
 import hello.itemservice.repository.OrderRepository;
+import hello.itemservice.repository.order.query.OrderFlatDTO;
 import hello.itemservice.repository.order.query.OrderQueryDTO;
 import hello.itemservice.repository.order.query.OrderQueryRepository;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,11 @@ public class OrderApiController {
 
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
+
+    @GetMapping("/api/v6/orders")
+    public List<OrderFlatDTO> ordersV6() {
+        return orderQueryRepository.findAllByDto_flat();
+    }
 
     @GetMapping("/api/v5/orders")
     public List<OrderQueryDTO> ordersV5() {
