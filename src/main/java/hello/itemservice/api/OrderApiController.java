@@ -25,6 +25,11 @@ public class OrderApiController {
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
 
+    @GetMapping("/api/v5/orders")
+    public List<OrderQueryDTO> ordersV5() {
+        return orderQueryRepository.findAllByDto_optimization();
+    }
+
     /**
      * V4 - JPA에서 DTO 직접 조회
      */

@@ -4,13 +4,50 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
 public class OrderQueryRepository {
 
     private final EntityManager em;
+
+    public List<OrderQueryDTO> findAllByDto_optimization() {
+        // 루트 조회! (toOne 코드를 한 번에 조회)
+        List<OrderQueryDTO> orders = findOrders();
+
+        Map<Long, List<OrderItemQueryDTO>> orderItemMap = findOrderItemMap(toOrderIds(orders));
+
+        for (OrderQueryDTO order : orders) {
+            order.setOrderItems(orderItemMap.get(order.getOrderId()));
+        }
+
+        return orders;
+    }
+
+    private List<Long> toOrderIds(List<OrderQueryDTO> orders) {
+        List<Long> orderIds = new ArrayList<>();
+        for (OrderQueryDTO order : orders) {
+            orderIds.add(order.getOrderId());
+        }
+        return orderIds;
+    }
+
+    private Map<Long, List<OrderItemQueryDTO>> findOrderItemMap(List<Long> orderIds) {
+        List<OrderItemQueryDTO> orderItems = em.createQuery("select new hello.itemservice.repository.order.query.OrderItemQueryDTO(oi.order.id, i.name, oi.orderPrice, oi.count) " +
+                " from OrderItem oi " +
+                " join oi.item i" +
+                " where oi.order.id in :orderIds", OrderItemQueryDTO.class)
+                .setParameter("orderIds", orderIds)
+                .getResultList();
+
+        return orderItems.stream()
+                .collect(Collectors.groupingBy(OrderItemQueryDTO::getOrderId));
+    }
 
     public List<OrderQueryDTO> findOrderQueryDtos() {
         List<OrderQueryDTO> findOrders = findOrders();
