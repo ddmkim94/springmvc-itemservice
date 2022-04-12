@@ -2,6 +2,8 @@ package hello.itemservice.api;
 
 import hello.itemservice.domain.*;
 import hello.itemservice.repository.OrderRepository;
+import hello.itemservice.repository.order.query.OrderQueryDTO;
+import hello.itemservice.repository.order.query.OrderQueryRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,15 @@ import java.util.List;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
+
+    /**
+     * V4 - JPA에서 DTO 직접 조회
+     */
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDTO> ordersV4() {
+        return orderQueryRepository.findOrderQueryDtos();
+    }
 
     @GetMapping("/api/v3.1/orders")
     public List<OrderDTO> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
@@ -33,7 +44,6 @@ public class OrderApiController {
         }
         return result;
     }
-
 
     /**
      * V3 - 엔티티 -> DTO 변환 (fetch join 사용!)
@@ -89,7 +99,7 @@ public class OrderApiController {
         private LocalDateTime orderDate;
         private OrderStatus orderStatus;
         private Address address;
-        private List<OrderItemDTO> orderItems;
+        private List<OrderItemDTO> orderItems; // OrderItem 엔티티 대신 DTO에 받아서 사용!
 
         public OrderDTO(Order order) {
             orderId = order.getId();
