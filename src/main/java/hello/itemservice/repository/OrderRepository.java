@@ -2,7 +2,10 @@ package hello.itemservice.repository;
 
 import hello.itemservice.domain.Order;
 import hello.itemservice.domain.OrderSearch;
+import hello.itemservice.domain.QMember;
+import hello.itemservice.domain.QOrder;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bind.annotation.Morph;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -28,7 +31,7 @@ public class OrderRepository {
     public List<Order> findAllByString(OrderSearch orderSearch) {
         String jpql = "select o From Order o join o.member m";
         boolean isFirstCondition = true;
-//주문 상태 검색
+        //주문 상태 검색
         if (orderSearch.getOrderStatus() != null) {
             if (isFirstCondition) {
                 jpql += " where";
