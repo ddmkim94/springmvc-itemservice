@@ -27,6 +27,11 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+    public List<Order> findAll(OrderSearch orderSearch) {
+        QOrder order = QOrder.order;
+        QMember member = QMember.member;
+    }
+
     // 주문 검색
     public List<Order> findAllByString(OrderSearch orderSearch) {
         String jpql = "select o From Order o join o.member m";
