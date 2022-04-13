@@ -2,7 +2,10 @@ package hello.itemservice.repository;
 
 import hello.itemservice.domain.Order;
 import hello.itemservice.domain.OrderSearch;
+import hello.itemservice.domain.QMember;
+import hello.itemservice.domain.QOrder;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bind.annotation.Morph;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -22,6 +25,11 @@ public class OrderRepository {
 
     public Order findById(Long id) {
         return em.find(Order.class, id);
+    }
+
+    public List<Order> findAll(OrderSearch orderSearch) {
+        QOrder order = QOrder.order;
+        QMember member = QMember.member;
     }
 
     // 주문 검색
