@@ -3,8 +3,9 @@ package hello.itemservice.service;
 import hello.itemservice.domain.*;
 import hello.itemservice.domain.item.Item;
 import hello.itemservice.repository.ItemRepository;
-import hello.itemservice.repository.MemberRepository;
+import hello.itemservice.repository.MemberRepositoryOld;
 import hello.itemservice.repository.OrderRepository;
+import hello.itemservice.repository.order.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,7 @@ public class OrderService {
      */
     @Transactional(readOnly = false)
     public Long order(Long memberId, Long itemId, int count) {
-        Member member = memberRepository.findById(memberId); // 회원 조회
+        Member member = memberRepository.findById(memberId).get(); // 회원 조회
         Item item = itemRepository.findById(itemId); // 아이템 조회
 
         Delivery delivery = new Delivery(member.getAddress(), DeliveryStatus.READY); // 배송 정보 생성

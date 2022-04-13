@@ -2,14 +2,11 @@ package hello.itemservice.service;
 
 import hello.itemservice.domain.Address;
 import hello.itemservice.domain.Member;
-import hello.itemservice.repository.MemberRepository;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.ThrowableTypeAssert;
+import hello.itemservice.repository.MemberRepositoryOld;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -19,7 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional // 테스트가 끝나면 트랜잭션 강제로 롤백 (테스트 클래스에서만 이렇게 동작)
 class MemberServiceTest {
 
-    @Autowired MemberRepository memberRepository;
+    @Autowired
+    MemberRepositoryOld memberRepository;
     @Autowired MemberService memberService;
 
     @Test

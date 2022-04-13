@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor // final 필드를 매개변수로 한 생성자를 생성
-public class MemberRepository {
+public class MemberRepositoryOld {
 
     private final EntityManager em;
 

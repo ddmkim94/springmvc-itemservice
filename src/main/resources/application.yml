@@ -12,6 +12,7 @@ spring:
         hibernate:
           format_sql: true # 보여지는 쿼리를 포맷팅해서 보여줌
           default_batch_fetch_size: 100
+#      open-in-view: false
 
 logging:
   level:

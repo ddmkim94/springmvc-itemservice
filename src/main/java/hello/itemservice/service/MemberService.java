@@ -1,7 +1,7 @@
 package hello.itemservice.service;
 
 import hello.itemservice.domain.Member;
-import hello.itemservice.repository.MemberRepository;
+import hello.itemservice.repository.order.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +39,7 @@ public class MemberService {
      */
     @Transactional
     public void update(Long memberId, String updateName) {
-        Member findMember = memberRepository.findById(memberId);
+        Member findMember = memberRepository.findById(memberId).get();
         findMember.changeMember(updateName);
     }
 
@@ -54,6 +54,6 @@ public class MemberService {
      * 회원 조회 (식별자)
      */
     public Member findById(Long id) {
-        return memberRepository.findById(id);
+        return memberRepository.findById(id).get();
     }
 }
